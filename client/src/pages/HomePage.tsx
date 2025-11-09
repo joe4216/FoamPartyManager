@@ -1,0 +1,134 @@
+import { useState } from "react";
+import Hero from "@/components/Hero";
+import StatsBar from "@/components/StatsBar";
+import FeaturedPackages from "@/components/FeaturedPackages";
+import HowItWorks from "@/components/HowItWorks";
+import Gallery from "@/components/Gallery";
+import Testimonials from "@/components/Testimonials";
+import BookingModal from "@/components/BookingModal";
+import { Button } from "@/components/ui/button";
+import { Phone, Mail, MapPin } from "lucide-react";
+import { Link } from "wouter";
+
+export default function HomePage() {
+  const [bookingModalOpen, setBookingModalOpen] = useState(false);
+  const [selectedPackage, setSelectedPackage] = useState<string>();
+
+  const handleBookClick = (packageType: string) => {
+    setSelectedPackage(packageType);
+    setBookingModalOpen(true);
+  };
+
+  return (
+    <div className="min-h-screen">
+      <Hero />
+      <StatsBar />
+      <FeaturedPackages onBookClick={handleBookClick} />
+      <HowItWorks />
+      <Gallery />
+      <Testimonials />
+      
+      <div id="booking-section" className="py-16 md:py-24 bg-gradient-to-br from-primary/10 to-primary/5">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <h2 className="text-4xl md:text-5xl font-bold font-['Poppins'] mb-6">
+                Ready to Foam?
+              </h2>
+              <p className="text-lg text-muted-foreground mb-8">
+                Let's make your next event absolutely unforgettable! Book your foam party today and get ready for the most fun you've ever had.
+              </p>
+              
+              <div className="space-y-4 mb-8">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
+                    <Phone className="w-5 h-5 text-primary" />
+                  </div>
+                  <div>
+                    <div className="font-semibold">Call Us</div>
+                    <a href="tel:555-FOAM-FUN" className="text-muted-foreground hover:text-primary">(555) FOAM-FUN</a>
+                  </div>
+                </div>
+                
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
+                    <Mail className="w-5 h-5 text-primary" />
+                  </div>
+                  <div>
+                    <div className="font-semibold">Email Us</div>
+                    <a href="mailto:party@sandmountainfoam.com" className="text-muted-foreground hover:text-primary">party@sandmountainfoam.com</a>
+                  </div>
+                </div>
+                
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
+                    <MapPin className="w-5 h-5 text-primary" />
+                  </div>
+                  <div>
+                    <div className="font-semibold">Service Area</div>
+                    <div className="text-muted-foreground">Sandmountain & Surrounding Areas</div>
+                  </div>
+                </div>
+              </div>
+              
+              <Button 
+                size="lg" 
+                className="text-lg px-8"
+                onClick={() => setBookingModalOpen(true)}
+                data-testid="button-book-cta"
+              >
+                Book Your Party Now
+              </Button>
+            </div>
+            
+            <div className="relative h-96 rounded-xl overflow-hidden">
+              <img
+                src="/attached_assets/generated_images/Large_scale_foam_event_6078494a.png"
+                alt="Large foam party event"
+                className="w-full h-full object-cover"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer className="bg-card border-t py-12">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div>
+              <h3 className="text-xl font-bold font-['Poppins'] mb-4">Sandmountain Foam Party</h3>
+              <p className="text-muted-foreground">Foaming Around and Find Out</p>
+            </div>
+            
+            <div>
+              <h4 className="font-semibold mb-4">Quick Links</h4>
+              <ul className="space-y-2 text-muted-foreground">
+                <li><a href="#packages-section" className="hover:text-primary">Packages</a></li>
+                <li><a href="#booking-section" className="hover:text-primary">Book Now</a></li>
+                <li><Link href="/owner/dashboard" className="hover:text-primary">Owner Portal</Link></li>
+              </ul>
+            </div>
+            
+            <div>
+              <h4 className="font-semibold mb-4">Contact</h4>
+              <ul className="space-y-2 text-muted-foreground">
+                <li>(555) FOAM-FUN</li>
+                <li>party@sandmountainfoam.com</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div className="border-t mt-8 pt-8 text-center text-muted-foreground">
+            <p>&copy; 2024 Sandmountain Foam Party. All rights reserved.</p>
+          </div>
+        </div>
+      </footer>
+
+      <BookingModal
+        open={bookingModalOpen}
+        onOpenChange={setBookingModalOpen}
+        selectedPackage={selectedPackage}
+      />
+    </div>
+  );
+}

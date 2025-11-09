@@ -1,0 +1,64 @@
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarHeader,
+  SidebarFooter,
+} from "@/components/ui/sidebar";
+import { LayoutDashboard, Calendar, Kanban, LogOut } from "lucide-react";
+import { Link, useLocation } from "wouter";
+
+export default function OwnerSidebar() {
+  const [location] = useLocation();
+
+  const menuItems = [
+    { title: "Dashboard", icon: LayoutDashboard, url: "/owner/dashboard" },
+    { title: "Calendar View", icon: Calendar, url: "/owner/calendar" },
+    { title: "Kanban Board", icon: Kanban, url: "/owner/kanban" },
+  ];
+
+  return (
+    <Sidebar>
+      <SidebarHeader className="p-6">
+        <h2 className="text-xl font-bold font-['Poppins']">Sandmountain Foam</h2>
+        <p className="text-sm text-muted-foreground">Owner Portal</p>
+      </SidebarHeader>
+      <SidebarContent>
+        <SidebarGroup>
+          <SidebarGroupLabel>Management</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {menuItems.map((item) => (
+                <SidebarMenuItem key={item.title}>
+                  <SidebarMenuButton asChild isActive={location === item.url}>
+                    <Link href={item.url} data-testid={`link-${item.title.toLowerCase().replace(/\s+/g, '-')}`}>
+                      <item.icon className="w-4 h-4" />
+                      <span>{item.title}</span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+      </SidebarContent>
+      <SidebarFooter className="p-4">
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild>
+              <Link href="/" data-testid="link-logout">
+                <LogOut className="w-4 h-4" />
+                <span>Back to Website</span>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarFooter>
+    </Sidebar>
+  );
+}
