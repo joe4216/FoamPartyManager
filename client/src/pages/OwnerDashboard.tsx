@@ -104,17 +104,17 @@ export default function OwnerDashboard() {
           <CardContent>
             <div className="space-y-3">
               <Link href="/owner/calendar">
-                <a className="block w-full p-4 text-left border rounded-lg hover-elevate" data-testid="button-quick-calendar">
+                <div className="block w-full p-4 text-left border rounded-lg hover-elevate cursor-pointer" data-testid="button-quick-calendar">
                   <div className="font-semibold mb-1">View Calendar</div>
                   <div className="text-sm text-muted-foreground">Check upcoming events</div>
-                </a>
+                </div>
               </Link>
               
               <Link href="/owner/kanban">
-                <a className="block w-full p-4 text-left border rounded-lg hover-elevate" data-testid="button-quick-kanban">
+                <div className="block w-full p-4 text-left border rounded-lg hover-elevate cursor-pointer" data-testid="button-quick-kanban">
                   <div className="font-semibold mb-1">Manage Bookings</div>
                   <div className="text-sm text-muted-foreground">Update booking status</div>
-                </a>
+                </div>
               </Link>
               
               <button

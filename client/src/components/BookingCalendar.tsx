@@ -34,7 +34,7 @@ export default function BookingCalendar({ bookings }: BookingCalendarProps) {
   const datesWithBookings = new Set(bookings.map(b => b.eventDate));
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
       <Card className="lg:col-span-2">
         <CardHeader>
           <CardTitle className="font-['Poppins']">Event Calendar</CardTitle>
@@ -64,7 +64,7 @@ export default function BookingCalendar({ bookings }: BookingCalendarProps) {
         </CardContent>
       </Card>
 
-      <Card>
+      <Card className="lg:col-span-3">
         <CardHeader>
           <CardTitle className="font-['Poppins']">
             {format(selectedDate, "MMMM d, yyyy")}
@@ -74,23 +74,49 @@ export default function BookingCalendar({ bookings }: BookingCalendarProps) {
           {bookingsForDate.length === 0 ? (
             <p className="text-muted-foreground text-center py-8">No bookings for this date</p>
           ) : (
-            <div className="space-y-3">
+            <div className="space-y-4">
               {bookingsForDate.map((booking) => (
                 <div
                   key={booking.id}
-                  className="p-3 border rounded-md hover-elevate"
+                  className="p-5 border rounded-lg hover-elevate"
                   data-testid={`booking-item-${booking.id}`}
                 >
-                  <div className="flex items-start justify-between gap-2 mb-2">
-                    <div className="font-semibold">{booking.customerName}</div>
+                  <div className="flex items-start justify-between gap-3 mb-4">
+                    <div>
+                      <h3 className="text-lg font-semibold mb-1">{booking.customerName}</h3>
+                      <div className="text-sm text-muted-foreground">{booking.packageType}</div>
+                    </div>
                     <Badge variant="secondary" className="capitalize">
                       {statusLabels[booking.status as keyof typeof statusLabels]}
                     </Badge>
                   </div>
-                  <div className="text-sm text-muted-foreground space-y-1">
-                    <div>{booking.packageType}</div>
-                    <div>{booking.eventTime}</div>
-                    <div>{booking.partySize} guests</div>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                    <div className="space-y-2">
+                      <div>
+                        <div className="text-muted-foreground mb-1">Contact Information</div>
+                        <div className="font-medium">{booking.email}</div>
+                        <div className="font-medium">{booking.phone}</div>
+                      </div>
+                      <div>
+                        <div className="text-muted-foreground mb-1">Address</div>
+                        <div className="font-medium">{booking.address}</div>
+                      </div>
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <div>
+                        <div className="text-muted-foreground mb-1">Event Details</div>
+                        <div className="font-medium">Time: {booking.eventTime}</div>
+                        <div className="font-medium">Party Size: {booking.partySize} guests</div>
+                      </div>
+                      {booking.notes && (
+                        <div>
+                          <div className="text-muted-foreground mb-1">Notes</div>
+                          <div className="font-medium">{booking.notes}</div>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
               ))}
