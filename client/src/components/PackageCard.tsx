@@ -62,7 +62,7 @@ export default function PackageCard({
       </CardContent>
       <CardFooter>
         <Button 
-          className="w-full" 
+          className="w-full min-h-11" 
           size="lg"
           onClick={onBook}
           data-testid={`button-book-${title.toLowerCase().replace(/\s+/g, '-')}`}
