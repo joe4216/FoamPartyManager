@@ -1,8 +1,9 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Calendar } from "@/components/ui/calendar";
+import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import { format } from "date-fns";
+import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameMonth, isToday, addMonths, subMonths } from "date-fns";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import type { Booking } from "@shared/schema";
 
@@ -13,11 +14,11 @@ const statusColors = {
   cancelled: "bg-red-500",
 };
 
-const statusLabels = {
-  pending: "Pending",
-  confirmed: "Confirmed",
-  completed: "Completed",
-  cancelled: "Cancelled",
+const statusVariants = {
+  pending: "default" as const,
+  confirmed: "default" as const,
+  completed: "secondary" as const,
+  cancelled: "destructive" as const,
 };
 
 interface BookingCalendarProps {
@@ -25,98 +26,93 @@ interface BookingCalendarProps {
 }
 
 export default function BookingCalendar({ bookings }: BookingCalendarProps) {
-  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+  const [currentMonth, setCurrentMonth] = useState(new Date());
 
-  const bookingsForDate = bookings.filter(
-    (booking) => booking.eventDate === format(selectedDate, "yyyy-MM-dd")
-  );
+  const monthStart = startOfMonth(currentMonth);
+  const monthEnd = endOfMonth(currentMonth);
+  const daysInMonth = eachDayOfInterval({ start: monthStart, end: monthEnd });
 
-  const datesWithBookings = new Set(bookings.map(b => b.eventDate));
+  const startDay = monthStart.getDay();
+  const paddingDays = Array(startDay).fill(null);
+
+  const getBookingsForDate = (date: Date) => {
+    const dateStr = format(date, "yyyy-MM-dd");
+    return bookings.filter(booking => booking.eventDate === dateStr);
+  };
+
+  const handlePrevMonth = () => setCurrentMonth(subMonths(currentMonth, 1));
+  const handleNextMonth = () => setCurrentMonth(addMonths(currentMonth, 1));
 
   return (
-    <Card className="max-w-7xl">
+    <Card>
       <CardHeader>
-        <CardTitle className="font-['Poppins']">Event Calendar</CardTitle>
+        <div className="flex items-center justify-between">
+          <CardTitle className="text-2xl font-bold font-['Poppins']">
+            {format(currentMonth, "MMMM yyyy")}
+          </CardTitle>
+          <div className="flex gap-2">
+            <Button variant="outline" size="icon" onClick={handlePrevMonth} data-testid="button-prev-month">
+              <ChevronLeft className="h-4 w-4" />
+            </Button>
+            <Button variant="outline" size="icon" onClick={handleNextMonth} data-testid="button-next-month">
+              <ChevronRight className="h-4 w-4" />
+            </Button>
+          </div>
+        </div>
       </CardHeader>
-      <CardContent className="space-y-6">
-        <Calendar
-          mode="single"
-          selected={selectedDate}
-          onSelect={(date) => date && setSelectedDate(date)}
-          className="rounded-md border w-full"
-          modifiers={{
-            hasBooking: (date) => datesWithBookings.has(format(date, "yyyy-MM-dd"))
-          }}
-          modifiersClassNames={{
-            hasBooking: "bg-primary/10 font-bold"
-          }}
-        />
-        
-        <div className="flex flex-wrap gap-4 pb-4 border-b">
-          {Object.entries(statusColors).map(([status, color]) => (
-            <div key={status} className="flex items-center gap-2">
-              <div className={`w-3 h-3 rounded-full ${color}`} />
-              <span className="text-sm text-muted-foreground capitalize">{statusLabels[status as keyof typeof statusLabels]}</span>
+      <CardContent>
+        <div className="grid grid-cols-7 gap-2">
+          {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
+            <div key={day} className="text-center font-semibold text-sm text-muted-foreground py-2">
+              {day}
             </div>
           ))}
+
+          {paddingDays.map((_, index) => (
+            <div key={`padding-${index}`} className="min-h-[120px]" />
+          ))}
+
+          {daysInMonth.map((day) => {
+            const dayBookings = getBookingsForDate(day);
+            const isCurrentDay = isToday(day);
+
+            return (
+              <div
+                key={day.toString()}
+                className={`min-h-[120px] border rounded-lg p-2 ${
+                  isCurrentDay ? "border-primary border-2" : ""
+                } ${!isSameMonth(day, currentMonth) ? "opacity-50" : ""}`}
+                data-testid={`calendar-day-${format(day, "yyyy-MM-dd")}`}
+              >
+                <div className={`text-sm font-semibold mb-1 ${isCurrentDay ? "text-primary" : ""}`}>
+                  {format(day, "d")}
+                </div>
+                <div className="space-y-1">
+                  {dayBookings.map((booking) => (
+                    <div
+                      key={booking.id}
+                      className={`text-xs p-1.5 rounded ${statusColors[booking.status as keyof typeof statusColors]} text-white cursor-pointer hover-elevate`}
+                      title={`${booking.customerName} - ${booking.packageType} at ${booking.eventTime}`}
+                      data-testid={`event-${booking.id}`}
+                    >
+                      <div className="font-semibold truncate">{booking.eventTime}</div>
+                      <div className="truncate">{booking.customerName}</div>
+                      <div className="text-[10px] truncate opacity-90">{booking.packageType}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
         </div>
 
-        <div>
-          <h3 className="text-xl font-semibold font-['Poppins'] mb-4">
-            {format(selectedDate, "MMMM d, yyyy")}
-          </h3>
-          
-          {bookingsForDate.length === 0 ? (
-            <p className="text-muted-foreground text-center py-8">No bookings for this date</p>
-          ) : (
-            <div className="space-y-4">
-              {bookingsForDate.map((booking) => (
-                <div
-                  key={booking.id}
-                  className="p-5 border rounded-lg hover-elevate"
-                  data-testid={`booking-item-${booking.id}`}
-                >
-                  <div className="flex items-start justify-between gap-3 mb-4">
-                    <div>
-                      <h4 className="text-lg font-semibold mb-1">{booking.customerName}</h4>
-                      <div className="text-sm text-muted-foreground">{booking.packageType}</div>
-                    </div>
-                    <Badge variant="secondary" className="capitalize">
-                      {statusLabels[booking.status as keyof typeof statusLabels]}
-                    </Badge>
-                  </div>
-                  
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                    <div className="space-y-2">
-                      <div>
-                        <div className="text-muted-foreground mb-1">Contact Information</div>
-                        <div className="font-medium">{booking.email}</div>
-                        <div className="font-medium">{booking.phone}</div>
-                      </div>
-                      <div>
-                        <div className="text-muted-foreground mb-1">Address</div>
-                        <div className="font-medium">{booking.address}</div>
-                      </div>
-                    </div>
-                    
-                    <div className="space-y-2">
-                      <div>
-                        <div className="text-muted-foreground mb-1">Event Details</div>
-                        <div className="font-medium">Time: {booking.eventTime}</div>
-                        <div className="font-medium">Party Size: {booking.partySize} guests</div>
-                      </div>
-                      {booking.notes && (
-                        <div>
-                          <div className="text-muted-foreground mb-1">Notes</div>
-                          <div className="font-medium">{booking.notes}</div>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              ))}
+        <div className="flex flex-wrap gap-4 mt-6 pt-4 border-t">
+          {Object.entries(statusColors).map(([status, color]) => (
+            <div key={status} className="flex items-center gap-2">
+              <div className={`w-3 h-3 rounded ${color}`} />
+              <span className="text-sm capitalize">{status}</span>
             </div>
-          )}
+          ))}
         </div>
       </CardContent>
     </Card>
