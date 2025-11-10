@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
-import { Sparkles } from "lucide-react";
+import { Sparkles, User } from "lucide-react";
+import { Link } from "wouter";
 import heroImage from "@assets/generated_images/Hero_foam_party_scene_c579c411.png";
 
 export default function Hero() {
@@ -20,6 +21,24 @@ export default function Hero() {
         style={{ backgroundImage: `url(${heroImage})` }}
       />
       <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/60" />
+      
+      <nav className="absolute top-0 left-0 right-0 z-20 px-4 py-4">
+        <div className="max-w-7xl mx-auto flex items-center justify-between">
+          <div className="text-white font-bold text-xl font-['Poppins']">
+            Sandmountain Foam
+          </div>
+          <Link href="/auth">
+            <Button 
+              variant="outline" 
+              className="bg-white/10 backdrop-blur-md border-white/30 text-white hover:bg-white/20"
+              data-testid="button-owner-signin"
+            >
+              <User className="w-4 h-4 mr-2" />
+              Owner Sign In
+            </Button>
+          </Link>
+        </div>
+      </nav>
       
       <div className="relative z-10 text-center px-4 max-w-5xl mx-auto">
         <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-6 py-2 mb-6">
