@@ -7,7 +7,8 @@ import Gallery from "@/components/Gallery";
 import Testimonials from "@/components/Testimonials";
 import BookingModal from "@/components/BookingModal";
 import { Button } from "@/components/ui/button";
-import { Phone, Mail, MapPin } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Phone, Mail, MapPin, ShieldCheck, Droplet, Wind, Sparkles } from "lucide-react";
 import { Link } from "wouter";
 
 export default function HomePage() {
@@ -19,9 +20,67 @@ export default function HomePage() {
     setBookingModalOpen(true);
   };
 
+  const safetyFeatures = [
+    {
+      icon: ShieldCheck,
+      title: "100% Safe",
+      description: "FDA-approved formula safe for all ages"
+    },
+    {
+      icon: Droplet,
+      title: "No Stains",
+      description: "Rinses away completely, leaves no residue"
+    },
+    {
+      icon: Wind,
+      title: "Scent-Free",
+      description: "Unscented formula for sensitive noses"
+    },
+    {
+      icon: Sparkles,
+      title: "Non-Toxic",
+      description: "Biodegradable and eco-friendly"
+    }
+  ];
+
   return (
     <div className="min-h-screen">
       <Hero />
+      
+      <section className="py-16 bg-background">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold font-['Poppins'] mb-4">
+              Safe & Family-Friendly Fun
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Our premium foam solution is specially designed for worry-free celebrations
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {safetyFeatures.map((feature) => {
+              const Icon = feature.icon;
+              return (
+                <Card key={feature.title} className="hover-elevate">
+                  <CardContent className="p-6 text-center">
+                    <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <Icon className="w-8 h-8 text-primary" />
+                    </div>
+                    <h3 className="text-xl font-semibold font-['Poppins'] mb-2">
+                      {feature.title}
+                    </h3>
+                    <p className="text-muted-foreground">
+                      {feature.description}
+                    </p>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+      
       <StatsBar />
       <FeaturedPackages onBookClick={handleBookClick} />
       <HowItWorks />
