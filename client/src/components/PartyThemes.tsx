@@ -160,17 +160,19 @@ export default function PartyThemes() {
         </div>
 
         <Tabs defaultValue="outdoor" className="w-full">
-          <TabsList className="grid w-full grid-cols-2 lg:grid-cols-5 mb-8">
-            {Object.entries(themes).map(([key, theme]) => {
-              const Icon = theme.icon;
-              return (
-                <TabsTrigger key={key} value={key} className="flex items-center gap-2">
-                  <Icon className="w-4 h-4" />
-                  <span className="hidden sm:inline">{theme.title}</span>
-                </TabsTrigger>
-              );
-            })}
-          </TabsList>
+          <div className="overflow-x-auto mb-8">
+            <TabsList className="inline-flex w-auto min-w-full">
+              {Object.entries(themes).map(([key, theme]) => {
+                const Icon = theme.icon;
+                return (
+                  <TabsTrigger key={key} value={key} className="flex items-center gap-2 whitespace-nowrap">
+                    <Icon className="w-4 h-4 flex-shrink-0" />
+                    <span>{theme.title}</span>
+                  </TabsTrigger>
+                );
+              })}
+            </TabsList>
+          </div>
 
           {Object.entries(themes).map(([key, theme]) => (
             <TabsContent key={key} value={key}>
