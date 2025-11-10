@@ -1,4 +1,4 @@
-# Sandmountain Foam Party - Design Guidelines
+# Foam Works Party Co - Design Guidelines
 
 ## Design Approach
 

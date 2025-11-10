@@ -32,7 +32,7 @@ export default function OwnerSidebar() {
   return (
     <Sidebar>
       <SidebarHeader className="p-6">
-        <h2 className="text-xl font-bold font-['Poppins']">Sandmountain Foam</h2>
+        <h2 className="text-xl font-bold font-['Poppins']">Foam Works Party Co</h2>
         <p className="text-sm text-muted-foreground">Owner Portal</p>
       </SidebarHeader>
       <SidebarContent>

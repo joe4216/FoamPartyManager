@@ -25,7 +25,7 @@ export default function Hero() {
       <nav className="absolute top-0 left-0 right-0 z-20 px-4 py-4">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="text-white font-bold text-xl font-['Poppins']">
-            Sandmountain Foam
+            Foam Works Party Co
           </div>
           <Link href="/auth">
             <Button 
@@ -47,7 +47,7 @@ export default function Hero() {
         </div>
         
         <h1 className="font-['Poppins'] text-5xl md:text-7xl lg:text-8xl font-extrabold text-white mb-6 leading-tight">
-          Sandmountain<br />Foam Party
+          Foam Works<br />Party Co
         </h1>
         
         <p className="text-2xl md:text-4xl text-white font-bold mb-8 font-['Poppins']">

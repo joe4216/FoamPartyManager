@@ -19,7 +19,7 @@ const testimonials = [
     initials: "MS",
     event: "Corporate Event",
     rating: 5,
-    text: "We hired Sandmountain for our company summer party and it was a huge hit! Everyone had an absolute blast."
+    text: "We hired Foam Works Party Co for our company summer party and it was a huge hit! Everyone had an absolute blast."
   },
   {
     name: "Emily Rodriguez",

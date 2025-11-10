@@ -1,8 +1,8 @@
-# Sandmountain Foam Party - Replit Configuration
+# Foam Works Party Co - Replit Configuration
 
 ## Overview
 
-Sandmountain Foam Party is a foam party rental booking platform featuring a customer-facing website for browsing packages and making reservations, plus an owner portal for managing bookings. The application enables customers to select foam party packages, choose event dates, and submit booking requests, while owners can track and manage bookings through multiple views (dashboard, calendar, and kanban board).
+Foam Works Party Co is a foam party rental booking platform featuring a customer-facing website for browsing packages and making reservations, plus an owner portal for managing bookings. The application enables customers to select foam party packages, choose event dates, and submit booking requests, while owners can track and manage bookings through multiple views (dashboard, calendar, and kanban board).
 
 ## User Preferences
 

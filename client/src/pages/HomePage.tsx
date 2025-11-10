@@ -117,7 +117,7 @@ export default function HomePage() {
                   </div>
                   <div>
                     <div className="font-semibold">Email Us</div>
-                    <a href="mailto:party@sandmountainfoam.com" className="text-muted-foreground hover:text-primary">party@sandmountainfoam.com</a>
+                    <a href="mailto:party@foamworksparty.com" className="text-muted-foreground hover:text-primary">party@foamworksparty.com</a>
                   </div>
                 </div>
                 
@@ -127,7 +127,7 @@ export default function HomePage() {
                   </div>
                   <div>
                     <div className="font-semibold">Service Area</div>
-                    <div className="text-muted-foreground">Sandmountain & Surrounding Areas</div>
+                    <div className="text-muted-foreground">Nationwide Service Available</div>
                   </div>
                 </div>
               </div>
