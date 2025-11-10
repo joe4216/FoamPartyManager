@@ -3,6 +3,7 @@ import Hero from "@/components/Hero";
 import StatsBar from "@/components/StatsBar";
 import FeaturedPackages from "@/components/FeaturedPackages";
 import HowItWorks from "@/components/HowItWorks";
+import PartyThemes from "@/components/PartyThemes";
 import Gallery from "@/components/Gallery";
 import Testimonials from "@/components/Testimonials";
 import BookingModal from "@/components/BookingModal";
@@ -84,6 +85,7 @@ export default function HomePage() {
       <StatsBar />
       <FeaturedPackages onBookClick={handleBookClick} />
       <HowItWorks />
+      <PartyThemes />
       <Gallery />
       <Testimonials />
       
