@@ -96,11 +96,21 @@ GITHUB_SETUP.md        # This file!
 
 ---
 
-## 🆘 Need Help?
+## 🆘 Troubleshooting
+
+### Jekyll Error (Fixed!)
+If you see an error like `"Error: No such file or directory @ dir_chdir0 - /github/workspace/docs"`, don't worry - this has been fixed!
+
+**What was happening:** GitHub Pages was trying to use Jekyll (a static site generator) to process your React app.
+
+**The fix:** A `.nojekyll` file has been added to tell GitHub Pages to skip Jekyll processing and serve your React app directly.
+
+### Common Issues
 
 - **Build failing?** Check the Actions tab for error logs
 - **Page not loading?** Wait 2-3 minutes after deployment
 - **Backend not working?** GitHub Pages only supports static files - use Railway/Render for full app
+- **404 errors?** Make sure you enabled GitHub Actions as the source in Settings → Pages
 
 ---
 
