@@ -47,9 +47,7 @@ export default function Hero() {
           Foam Works<br />Party Co
         </h1>
         
-        <p className="text-2xl md:text-4xl text-white font-bold mb-8 font-['Poppins']">
-          Foaming Around and Find Out
-        </p>
+        <p className="text-2xl md:text-4xl text-white font-bold mb-8 font-['Poppins']">Foam Around and Find Out</p>
         
         <p className="text-lg md:text-xl text-white/90 mb-12 max-w-2xl mx-auto">
           Transform any event into an unforgettable foam-filled celebration. Professional equipment, safe fun, and memories that last forever.
