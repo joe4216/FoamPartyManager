@@ -81,26 +81,24 @@ export default function NewsFeed() {
                       data-testid={`iframe-hover-preview-${party.id}`}
                     />
                   ) : (
-                    <>
-                      <img 
-                        src={party.thumbnail}
-                        alt={party.title}
-                        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                      />
-                      <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors" />
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <Button 
-                          size="icon" 
-                          className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-md border-white/30 text-white hover:bg-white/30"
-                          onClick={() => setSelectedVideo(party.id)}
-                          data-testid={`button-play-video-${party.id}`}
-                        >
-                          <Play className="w-8 h-8 ml-1" fill="currentColor" />
-                        </Button>
-                      </div>
-                    </>
+                    <img 
+                      src={party.thumbnail}
+                      alt={party.title}
+                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
                   )}
-                  <div className="absolute top-4 right-4 z-10">
+                  <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors pointer-events-none" />
+                  <div className="absolute inset-0 flex items-center justify-center z-20">
+                    <Button 
+                      size="icon" 
+                      className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-md border-white/30 text-white hover:bg-white/30 pointer-events-auto"
+                      onClick={() => setSelectedVideo(party.id)}
+                      data-testid={`button-play-video-${party.id}`}
+                    >
+                      <Play className="w-8 h-8 ml-1" fill="currentColor" />
+                    </Button>
+                  </div>
+                  <div className="absolute top-4 right-4 z-10 pointer-events-none">
                     <Badge className="bg-primary/90 backdrop-blur-sm" data-testid={`badge-category-${party.id}`}>
                       {party.category}
                     </Badge>
