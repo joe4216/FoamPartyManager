@@ -1,12 +1,15 @@
+import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Play, Calendar, MapPin, Users, ThumbsUp, Share2 } from "lucide-react";
+import { Play, Calendar, MapPin, Users, ThumbsUp, Share2, X } from "lucide-react";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import partyImage1 from "@assets/stock_images/foam_party_concert_c_e76f1010.jpg";
 import partyImage2 from "@assets/stock_images/foam_party_concert_c_49509d2b.jpg";
 import partyImage3 from "@assets/stock_images/foam_party_concert_c_96f5780e.jpg";
 
 export default function NewsFeed() {
+  const [selectedVideo, setSelectedVideo] = useState<number | null>(null);
   const recentParties = [
     {
       id: 1,
@@ -16,7 +19,7 @@ export default function NewsFeed() {
       attendees: "500+",
       description: "What an incredible night! Over 500 guests danced the night away in our massive foam pit. The energy was electric with DJ Mike spinning non-stop hits!",
       thumbnail: partyImage1,
-      videoUrl: "#",
+      videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
       likes: 247,
       category: "Concert"
     },
@@ -28,7 +31,7 @@ export default function NewsFeed() {
       attendees: "75",
       description: "Sarah's 21st birthday was one for the books! Tropical theme with colored foam, tiki torches, and endless smiles. Thanks for letting us be part of your special day!",
       thumbnail: partyImage2,
-      videoUrl: "#",
+      videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
       likes: 156,
       category: "Birthday"
     },
@@ -40,7 +43,7 @@ export default function NewsFeed() {
       attendees: "120",
       description: "When TechCorp wanted to boost team morale, they chose foam! Watch as executives and employees alike let loose in the ultimate team bonding experience.",
       thumbnail: partyImage3,
-      videoUrl: "#",
+      videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
       likes: 98,
       category: "Corporate"
     }
@@ -58,7 +61,7 @@ export default function NewsFeed() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {recentParties.map((party) => (
             <Card key={party.id} className="hover-elevate overflow-hidden" data-testid={`card-party-${party.id}`}>
               <div className="relative group">
@@ -73,6 +76,7 @@ export default function NewsFeed() {
                     <Button 
                       size="icon" 
                       className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-md border-white/30 text-white hover:bg-white/30"
+                      onClick={() => setSelectedVideo(party.id)}
                       data-testid={`button-play-video-${party.id}`}
                     >
                       <Play className="w-8 h-8 ml-1" fill="currentColor" />
@@ -137,6 +141,23 @@ export default function NewsFeed() {
           </Button>
         </div>
       </div>
+
+      <Dialog open={selectedVideo !== null} onOpenChange={() => setSelectedVideo(null)}>
+        <DialogContent className="max-w-4xl p-0" data-testid="dialog-video-player">
+          <div className="relative pt-[56.25%]">
+            {selectedVideo && (
+              <iframe
+                className="absolute inset-0 w-full h-full"
+                src={recentParties.find(p => p.id === selectedVideo)?.videoUrl}
+                title="Party Video"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                data-testid="iframe-video"
+              />
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
     </section>
   );
 }
