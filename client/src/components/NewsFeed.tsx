@@ -72,21 +72,18 @@ export default function NewsFeed() {
                 onMouseLeave={() => setHoveredVideo(null)}
               >
                 <div className="relative h-64 overflow-hidden">
-                  {hoveredVideo === party.id ? (
-                    <iframe
-                      className="w-full h-full object-cover"
-                      src={`${party.videoUrl}?autoplay=1&mute=1&controls=0&loop=1&playlist=${party.videoUrl.split('/').pop()}`}
-                      title={party.title}
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      data-testid={`iframe-hover-preview-${party.id}`}
-                    />
-                  ) : (
-                    <img 
-                      src={party.thumbnail}
-                      alt={party.title}
-                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                    />
-                  )}
+                  <img 
+                    src={party.thumbnail}
+                    alt={party.title}
+                    className={`w-full h-full object-cover transition-transform duration-300 group-hover:scale-105 ${hoveredVideo === party.id ? 'opacity-0' : 'opacity-100'}`}
+                  />
+                  <iframe
+                    className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${hoveredVideo === party.id ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+                    src={hoveredVideo === party.id ? `${party.videoUrl}?autoplay=1&mute=1&controls=0&loop=1&playlist=${party.videoUrl.split('/').pop()}` : 'about:blank'}
+                    title={party.title}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    data-testid={`iframe-hover-preview-${party.id}`}
+                  />
                   <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors pointer-events-none" />
                   <div className="absolute inset-0 flex items-center justify-center z-20">
                     <Button 
