@@ -21,12 +21,10 @@ export default function Hero() {
         style={{ backgroundImage: `url(${heroImage})` }}
       />
       <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/60" />
-      
       <nav className="absolute top-0 left-0 right-0 z-20 px-4 py-4">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="text-white font-bold text-xl font-['Poppins']">
-            Foam Works Party Co
-          </div>
+          <div className="text-white font-bold text-xl font-['Poppins']">Foam Works Party Co.
+</div>
           <Link href="/auth">
             <Button 
               variant="outline" 
@@ -39,7 +37,6 @@ export default function Hero() {
           </Link>
         </div>
       </nav>
-      
       <div className="relative z-10 text-center px-4 max-w-5xl mx-auto">
         <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-6 py-2 mb-6">
           <Sparkles className="w-5 h-5 text-white" />
