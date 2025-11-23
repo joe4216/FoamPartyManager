@@ -1,15 +1,14 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Check } from "lucide-react";
+import { Check, Clock } from "lucide-react";
 
 interface PackageCardProps {
   title: string;
   price: string;
   duration: string;
-  image: string;
   features: string[];
-  capacity: string;
+  description: string;
   popular?: boolean;
   onBook: () => void;
 }
@@ -18,39 +17,30 @@ export default function PackageCard({
   title,
   price,
   duration,
-  image,
   features,
-  capacity,
+  description,
   popular,
   onBook
 }: PackageCardProps) {
   return (
-    <Card className="overflow-hidden hover-elevate relative h-full flex flex-col" data-testid={`card-package-${title.toLowerCase().replace(/\s+/g, '-')}`}>
+    <Card className="hover-elevate relative h-full flex flex-col" data-testid={`card-package-${title.toLowerCase().replace(/\s+/g, '-')}`}>
       {popular && (
         <Badge className="absolute top-4 right-4 z-10 bg-primary text-primary-foreground">
           Most Popular
         </Badge>
       )}
-      <div className="relative h-48 overflow-hidden bg-muted">
-        <img 
-          src={image} 
-          alt={title}
-          className="w-full h-full object-contain"
-        />
-      </div>
       <CardHeader className="pb-4">
-        <div className="flex items-baseline justify-between gap-2">
+        <div className="text-center space-y-2">
           <h3 className="text-2xl font-bold font-['Poppins']">{title}</h3>
-          <div className="text-right">
-            <div className="text-3xl font-bold text-primary">{price}</div>
-            <div className="text-sm text-muted-foreground">{duration}</div>
+          <div className="flex items-center justify-center gap-2 text-muted-foreground">
+            <Clock className="w-4 h-4" />
+            <span className="text-sm">{duration}</span>
           </div>
+          <div className="text-4xl font-bold text-primary">{price}</div>
         </div>
+        <p className="text-sm text-muted-foreground text-center mt-4">{description}</p>
       </CardHeader>
       <CardContent className="space-y-4 flex-1">
-        <div className="flex items-center gap-2">
-          <Badge variant="secondary">{capacity}</Badge>
-        </div>
         <ul className="space-y-2">
           {features.map((feature, index) => (
             <li key={index} className="flex items-start gap-2">
